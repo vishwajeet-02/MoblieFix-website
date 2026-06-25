@@ -1,0 +1,34 @@
+{
+  "userdata": [
+    {
+      "brand": "Appel i phone",
+      "model": "i phone15",
+      "service": "Screen Repair",
+      "Address": "",
+      "address": "noida",
+      "id": "bR93vYvBdCo"
+    },
+    {
+      "brand": "infnix",
+      "model": "i-17",
+      "service": "Screen Repair",
+      "address": "Address punjab",
+      "id": "KaDuKq1tgD0"
+    },
+    {
+      "brand": "viivo",
+      "model": "v-50",
+      "service": "Screen Repair",
+      "address": "jaipur ",
+      "id": "XEM39MpfrSA"
+    },
+    {
+      "brand": "i-phone",
+      "model": " i-17",
+      "service": "Software Issue",
+      "address": "noida",
+      "id": "9jMM9VQ3lgk"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
