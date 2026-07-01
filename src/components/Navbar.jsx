@@ -137,9 +137,56 @@ Login
 </Link>
 
 
-<button>
+<button
+onClick={()=>setShowAuth(true)}
+className="
+group
+relative
+w-12
+h-12
+flex
+items-center
+justify-center
+rounded-full
+bg-white/10
+backdrop-blur-xl
+border
+border-white/30
+shadow-lg
+hover:bg-white/20
+hover:border-cyan-300
+hover:shadow-cyan-400/50
+hover:scale-110
+transition-all
+duration-300
+"
+>
 
-<FaUserShield className="text-2xl"/>
+<FaUserShield
+className="
+text-2xl
+text-white
+group-hover:text-cyan-300
+group-hover:scale-125
+transition-all
+duration-300
+"
+/>
+
+<span
+className="
+absolute
+inset-0
+rounded-full
+border
+border-white/20
+opacity-0
+group-hover:opacity-100
+group-hover:scale-125
+transition-all
+duration-500
+"
+/>
 
 </button>
 
@@ -184,13 +231,65 @@ menuOpen &&
 (
 
 <div className="md:hidden bg-blue-700 mx-4 mb-4 p-5 rounded-xl flex flex-col gap-4">
-<button 
+<button
 onClick={()=>setShowAuth(true)}
-className="bg-white text-blue-600 p-2 rounded-full text-center flex justify-center items-center gap-2"
+className="
+group
+relative
+w-full
+h-12
+flex
+items-center
+justify-center
+gap-3
+rounded-xl
+bg-white/10
+backdrop-blur-xl
+border
+border-white/30
+text-white
+shadow-lg
+hover:bg-white/20
+hover:border-cyan-300
+hover:shadow-cyan-400/50
+hover:scale-[1.03]
+transition-all
+duration-300
+overflow-hidden
+"
 >
-<FaUserShield/>
+
+<span
+className="
+absolute
+inset-0
+bg-white/10
+opacity-0
+group-hover:opacity-100
+transition
+duration-300
+"
+/>
+
+<FaUserShield
+className="
+relative
+z-10
+text-2xl
+text-white
+group-hover:text-cyan-300
+group-hover:scale-125
+transition-all
+duration-300
+"
+/>
+
+<span className="relative z-10 font-semibold">
 Admin
-</button>
+</span>
+
+</button>   
+  
 
 <Link to="/Home">
 About
