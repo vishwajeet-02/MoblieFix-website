@@ -91,7 +91,7 @@ text-black
 
 {/* DESKTOP MENU */}
 
-<div className="hidden md:flex items-center gap-5">
+<div className="hidden md:flex items-center gap-6">
 
 
 <Link to="/Home">
@@ -184,7 +184,13 @@ menuOpen &&
 (
 
 <div className="md:hidden bg-blue-700 mx-4 mb-4 p-5 rounded-xl flex flex-col gap-4">
-
+<button 
+onClick={()=>setShowAuth(true)}
+className="bg-white text-blue-600 p-2 rounded-full text-center flex justify-center items-center gap-2"
+>
+<FaUserShield/>
+Admin
+</button>
 
 <Link to="/Home">
 About
