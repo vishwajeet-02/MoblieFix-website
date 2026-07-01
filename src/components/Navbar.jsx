@@ -4,7 +4,9 @@ import {  FaUserShield,  } from "react-icons/fa6";
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AdminDashboard from "../AdminDashboard/adminDashboard";
+import { FaBars, FaTimes } from "react-icons/fa";
 const Navbar=()=>{
+  const [menuOpen, setMenuOpen] = useState(false);
  const [showAuth, setShowAuth]= useState(false)
     const [isSignup, setIsSignUp]= useState(true)
     const [isAdminLoggedin, setIsAdminLoggedIn]= useState(false)
@@ -15,21 +17,239 @@ const Navbar=()=>{
     } )
       return (
          <>
-<nav className="bg-blue-600 text-white p-6 py-3 flex justify-between items-center">
-    <div className="flex items-center gap-3">
+
+<nav className="bg-blue-600 text-white w-full">
+
+<div className="w-full px-4 md:px-8 py-3 flex flex-wrap items-center justify-between">
+
+
+{/* LOGO */}
+
+<div className="flex items-center gap-3">
+
+<img 
+src="/logo3.jpg"
+alt="logo"
+className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover"
+/>
+
+
+<div>
+
+<h1 className="text-lg md:text-2xl font-bold">
+Mobile<span className="text-green-400">Fix</span>
+</h1>
+
+<p className="hidden sm:block text-xs">
+Mobile Repair at Your Doorstep
+</p>
+
+</div>
+
+</div>
+
+
+
+
+{/* SEARCH */}
+
+<div className="
+order-3 
+w-full 
+mt-4
+md:order-none
+md:mt-0
+md:w-[400px]
+">
+
+
+<div className="bg-white rounded-full flex items-center px-4 py-2">
+
+<FaSearch className="text-gray-500"/>
+
+
+<input
+type="text"
+placeholder="Search repair services..."
+className="
+ml-3
+w-full
+outline-none
+text-black
+"
+/>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+{/* DESKTOP MENU */}
+
+<div className="hidden md:flex items-center gap-5">
+
+
+<Link to="/Home">
+About
+</Link>
+
+
+<Link to="/mybookings">
+MyBookings
+</Link>
+
+
+<Link to="/bookrepair">
+BookRepair
+</Link>
+
+
+<Link 
+to="/register"
+className="
+bg-white
+text-blue-600
+px-5
+py-2
+rounded-full
+"
+>
+Sign Up
+</Link>
+
+
+<Link
+to="/login"
+className="
+bg-white
+text-blue-600
+px-5
+py-2
+rounded-full
+"
+>
+Login
+</Link>
+
+
+<button>
+
+<FaUserShield className="text-2xl"/>
+
+</button>
+
+
+</div>
+
+
+
+
+
+{/* MOBILE BUTTON */}
+
+<button
+
+className="md:hidden text-2xl"
+
+onClick={()=>setMenuOpen(!menuOpen)}
+
+>
+
+{
+menuOpen ? <FaTimes/> : <FaBars/>
+}
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+{/* MOBILE MENU */}
+
+
+{
+menuOpen &&
+
+(
+
+<div className="md:hidden bg-blue-700 mx-4 mb-4 p-5 rounded-xl flex flex-col gap-4">
+
+
+<Link to="/Home">
+About
+</Link>
+
+
+<Link to="/mybookings">
+MyBookings
+</Link>
+
+
+<Link to="/bookrepair">
+BookRepair
+</Link>
+
+
+<Link
+to="/register"
+className="bg-white text-blue-600 p-2 rounded-full text-center"
+>
+Sign Up
+</Link>
+
+
+<Link
+to="/login"
+className="bg-white text-blue-600 p-2 rounded-full text-center"
+>
+Login
+</Link>
+
+
+</div>
+
+)
+
+}
+
+
+
+</nav>
+
+{/* <nav className="bg-blue-600 text-white w-full px-4 md:px-8 py-3 flex flex-wrap items-center gap-4"> 
+   <div className="w-full flex flex-wrap items-center justify-between gap-3">
+    <div className="flex items-center gap-3 ">
     <img src="/logo3.jpg" 
     alt=" Logo"
-    className="w-20 h-20 rounded-full object-cover "/>
+  
+    className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover"/>
     <div className="flex flex-col">
-    <h1 className="text-white text-2xl font-bold leading-none"> Mobile<span className="text-green-500">Fix</span> </h1>
-    <p className="text-gray-200 text-xs mt-1">Mobile Repair at Your Doorstep</p>
+    <h1 className="text-white text-base md:text-2xl font-bold"> Mobile<span className="text-green-500">Fix</span> </h1>
+    <p className="text-gray-200 text-xs mt-1 hidden sm:block">Mobile Repair at Your Doorstep</p>
     </div>
     </div>
-    <div className="flex items-center  bg-white rounded-full px-4 py-2 w-[450px] ">
+
+    <div className="order-3 w-full md:order-none md:w-[450px]">
+  <div className="flex items-center bg-white rounded-full px-4 py-2">
         <FaSearch className="text-gray-500"/>
         <input type="text" placeholder="Search repair services.."
-        className="ml-3 w-full outline-none text-black placeholder-gray-500 bg-transparent" /> </div>
-    <div className="flex items-center gap-6">
+        className="ml-3 w-full outline-none text-black placeholder-gray-500 bg-transparent" />
+        </div>
+         </div>
+   
+  
+    <div className="hidden lg:flex items-center gap-6">
     <Link to="/Home" className="text-white font-medium hover:text-gray-200">About</Link>
     <Link to="/mybookings" className="text-white font-medium hover:text-gray-200">MyBookings</Link>
     <Link to="/bookrepair"className="text-white font-medium hover:text-gray-200">BookRepair</Link>
@@ -37,12 +257,52 @@ const Navbar=()=>{
       <Link to="/login" className="bg-white text-blue-600 px-5 py-2 rounded-full font-semibold hover:bg-gray-300">Login</Link>
       <button onClick={()=>setShowAuth(true)} className="p-3 rounded-full bg-white/10 backdrop-blur-md border
        border-white/20 hover:scale-110 transition"><FaUserShield className="text-2xl text-white"/></button>
+
     </div>
-</nav>
+         <button
+  className="lg:hidden text-2xl"
+  onClick={() => setMenuOpen(!menuOpen)}
+>
+  {menuOpen ? <FaTimes /> : <FaBars />}
+</button>
+</div>
+{menuOpen && (
+  <div className="md:hidden mt-4 bg-blue-700 p-5 flex flex-col gap-4 rounded-xl">
+    <Link to="/Home">About</Link>
+
+    <Link to="/mybookings">
+      MyBookings
+    </Link>
+
+    <Link to="/bookrepair">
+      BookRepair
+    </Link>
+
+    <Link
+      to="/register"
+      className="bg-white text-blue-600 p-2 rounded-full text-center"
+    >
+      Sign Up
+    </Link>
+
+    <Link
+      to="/login"
+      className="bg-white text-blue-600 p-2 rounded-full text-center"
+    >
+      Login
+    </Link>
+
+    
+  </div>
+)}
+</nav>  */}
+
+
 {showAuth && (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
-        <div className="absolute right-0 top-0 h-screen w-[430px] bg-slate-950/95
-         backdrop-blur-xl broder border-slate-700 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-8 overflow-y-auto">
+        
+         <div className="absolute right-0 top-0 h-screen w-full sm:w-[430px] bg-slate-950/95 backdrop-blur-xl border
+          border-slate-700 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-8 overflow-y-auto">
             <button onClick={()=> setShowAuth(false)} className="absolute top-5 right-5 text-gray-400 hover:text-white text-xl">X</button>
             <div className="mt-8 mb-10">
             <h2 className="text-4xl font-bold text-white ">{isSignup ?"Admin Signup": "Admin Login"}</h2>

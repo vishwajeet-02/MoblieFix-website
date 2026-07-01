@@ -39,8 +39,9 @@
      const Card =()=>{ 
     return(
     
-    <section className="py-16 bg-white">
-<div className="max-w-7xl mx-auto px-4">
+    // <section className="py-16 bg-white">
+    <section className="w-full overflow-hidden py-16 bg-white">
+<div className="w-full max-w-7xl mx-auto px-4">
     <h4 className="text-center text-blue-600 font-semibold uppercase">
         Our  Services
     </h4>

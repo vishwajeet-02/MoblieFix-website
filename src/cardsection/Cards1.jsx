@@ -55,7 +55,8 @@
      const Card1 =()=>{ 
     return(
    <>
-    <section className="py-16 bg-gray-50">
+    {/* <section className="py-16 bg-gray-50"> */}
+    <section className="w-full overflow-hidden py-16 bg-gray-50">
 <div className="max-w-7xl mx-auto px-4">
     <h4 className="text-center text-blue-600 font-semibold uppercase">
         HOW IT WORKS
@@ -69,7 +70,7 @@
     {services.map((item, index)=>( 
 <div 
 key={index}
-className="w-64 bg-white rounded-xl shadow-md p-6 text-center
+className="w-full sm:w-64 bg-white rounded-xl shadow-md p-6 text-center
  transition-all duration-300 ease-in-out hover:-translate-y-2 
  hover:shadow-2xl hover:border-blue-500 hover:border">
     <div className="text-5xl text-blue-600 flex justify-center mb-4 
@@ -89,7 +90,21 @@ className="w-64 bg-white rounded-xl shadow-md p-6 text-center
     ))}
 </div>
 </div> <br /> <br />
-<div className="h-20 max-w-7xl border-2 color-red to-sky-400 mx-auto bg-blue-900 rounded-lg flex justify-around items-center    ">
+{/* <div className="h-20 max-w-7xl border-2 color-red to-sky-400 mx-auto bg-blue-900 rounded-lg flex justify-around items-center    "> */}
+<div className="
+w-full
+max-w-7xl
+mx-auto
+bg-blue-900
+rounded-lg
+flex
+flex-wrap
+justify-around
+items-center
+gap-6
+py-6
+px-4
+">
 <div>
 <FaSmile className="text-yellow-400 text-3xl"/>
  <h1 className="text-white">10,000+</h1>
@@ -120,7 +135,8 @@ className="w-64 bg-white rounded-xl shadow-md p-6 text-center
       <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-8">
         {reviews.map((item,index)=>(
             <div key={index}
-            className="w-80 bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300">
+            // className="w-80 bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300">
+            className="w-full sm:w-80 bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300">
                 <FaQuoteLeft className="text-4xl text-blue-600 mb-4"/>
                 <p className="text-gray-600 mb-6">{item.review}</p>
                 <div className="flex items-center gap-4">

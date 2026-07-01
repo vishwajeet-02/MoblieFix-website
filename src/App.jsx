@@ -15,6 +15,7 @@ import AnalyticsDashboard from "./AdminDashboard/AnalyticsDashboard";
 const App=()=>{
     return(
     <>
+  
         <BrowserRouter>
         <Routes>
      <Route path="/" element={<Layout/>}/>       

@@ -3,8 +3,9 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 const Hero=()=>{
     return(
         <>
-        <section className="flex flex-col md:flex-row items-center justify-between px-15 py-20">
-            <div className="md:w-1/2">
+        {/* <section className="flex flex-col md:flex-row items-center justify-between px-15 py-20"> */}
+        <section className="w-full flex flex-col md:flex-row items-center justify-between px-5 md:px-12 py-10 md:py-20 gap-10 overflow-hidden">
+            <div className= "md:w-1/2">
         <h1 className="text-black text-4xl font-bold leading-none">
             Welcome to: <br/> Mobile Repair at Your <span className="text-blue-500">Doorstep</span></h1>
         <h2 className="mt-4 text-lg">Professional repair for all smartphone brands.
@@ -32,10 +33,19 @@ const Hero=()=>{
                 </div>
             </div>
            </div>
-            <div className="md:w-1/2 flex justify-end">
+            {/* <div className="md:w-1/2 flex justify-end">
         <img src="/hero.png" alt="hero" className="w-[500px] max-w-full"/>
         </div> 
-        
+         */}
+         <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+
+    <img 
+      src="/hero.png" 
+      alt="hero" 
+      className="w-full max-w-[500px]"
+    />
+
+</div>
         </section>
         </>
         
