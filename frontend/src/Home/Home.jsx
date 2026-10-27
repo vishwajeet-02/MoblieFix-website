@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import Whychoose from "./WhyChoose";
 import Services from "./Services";

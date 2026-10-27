@@ -12,8 +12,8 @@ import {
   FaClock,
   FaCheckCircle,
 } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
 
+import {FaTwitter} from "react-icons/fa"
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -46,7 +46,7 @@ const Footer = () => {
   const quickLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
-    { name: "Our Services", path: "/BookRepair" },
+    { name: "Our Services", path: "/Home" },
     { name: "Book a Repair", path: "/BookRepair" },
     { name: "My Bookings", path: "/mybookings" },
   ];
