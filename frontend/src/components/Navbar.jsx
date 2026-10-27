@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   FaSearch,
   FaBars,
@@ -13,8 +12,52 @@ import {
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
+const searchItems = [
+  {
+    title: "Home",
+    description: "MobileFix home page",
+    keywords: "home mobilefix",
+    path: "/Home",
+  },
+  {
+    title: "About",
+    description: "Learn about our mobile repair service",
+    keywords: "about company information",
+    path: "/Home",
+  },
+  {
+    title: "Book Repair",
+    description: "Book a mobile repair at your doorstep",
+    keywords: "repair booking mobile fix service",
+    path: "/bookrepair",
+  },
+  {
+    title: "My Bookings",
+    description: "View and track your repair bookings",
+    keywords: "my bookings track repair status",
+    path: "/mybookings",
+    requiresLogin: true,
+  },
+  {
+    title: "Login",
+    description: "Login to your account",
+    keywords: "login sign in account",
+    path: "/login",
+  },
+  {
+    title: "Sign Up",
+    description: "Create a new account",
+    keywords: "signup register create account",
+    path: "/register",
+  },
+];
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showResults, setShowResults] = useState(false);
+
+  const searchRef = useRef(null);
   const navigate = useNavigate();
 
   const isLoggedIn = Boolean(localStorage.getItem("token"));
@@ -32,6 +75,57 @@ const Navbar = () => {
 
   const closeMenu = () => {
     setMenuOpen(false);
+  };
+
+  const closeSearch = () => {
+    setShowResults(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowResults(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  const filteredResults = searchItems.filter((item) => {
+    const query = searchQuery.trim().toLowerCase();
+
+    if (!query) return false;
+
+    const searchableText =
+      `${item.title} ${item.description} ${item.keywords}`.toLowerCase();
+
+    return searchableText.includes(query);
+  });
+
+  const handleSearchSelect = (item) => {
+    if (item.requiresLogin && !isLoggedIn) {
+      navigate("/login");
+    } else {
+      navigate(item.path);
+    }
+
+    setSearchQuery("");
+    closeSearch();
+    closeMenu();
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+
+    if (filteredResults.length > 0) {
+      handleSearchSelect(filteredResults[0]);
+    } else if (searchQuery.trim()) {
+      setShowResults(true);
+    }
   };
 
   const handleLogout = () => {
@@ -56,7 +150,6 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-white/10 bg-slate-950/95 text-white shadow-xl backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3 md:px-8">
-
         {/* LOGO */}
         <Link
           to="/Home"
@@ -79,17 +172,73 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* SEARCH BAR */}
-        <div className="order-3 w-full md:order-none md:w-64 lg:w-80">
-          <div className="flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2.5 transition focus-within:border-cyan-400">
+        {/* FUNCTIONAL SEARCH BAR */}
+        <div
+          ref={searchRef}
+          className="relative order-3 w-full md:order-none md:w-64 lg:w-80"
+        >
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2.5 transition focus-within:border-cyan-400"
+          >
             <FaSearch className="shrink-0 text-slate-400" />
+
             <input
               type="search"
-              placeholder="Search repair services..."
-              aria-label="Search repair services"
+              value={searchQuery}
+              onChange={(event) => {
+                setSearchQuery(event.target.value);
+                setShowResults(true);
+              }}
+              onFocus={() => {
+                if (searchQuery.trim()) setShowResults(true);
+              }}
+              placeholder="Search pages and services..."
+              aria-label="Search pages and services"
+              aria-expanded={showResults}
               className="ml-3 w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-400"
             />
-          </div>
+
+            {searchQuery && (
+              <button
+                type="button"
+                aria-label="Clear search"
+                onClick={() => {
+                  setSearchQuery("");
+                  setShowResults(false);
+                }}
+                className="ml-2 text-slate-400 hover:text-white"
+              >
+                <FaTimes />
+              </button>
+            )}
+          </form>
+
+          {showResults && searchQuery.trim() && (
+            <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-80 overflow-y-auto rounded-xl border border-white/10 bg-slate-900 p-2 shadow-2xl">
+              {filteredResults.length > 0 ? (
+                filteredResults.map((item) => (
+                  <button
+                    key={item.title}
+                    type="button"
+                    onClick={() => handleSearchSelect(item)}
+                    className="flex w-full flex-col rounded-lg px-3 py-3 text-left transition hover:bg-white/10"
+                  >
+                    <span className="font-semibold text-cyan-300">
+                      {item.title}
+                    </span>
+                    <span className="mt-1 text-xs text-slate-400">
+                      {item.description}
+                    </span>
+                  </button>
+                ))
+              ) : (
+                <p className="px-3 py-4 text-sm text-slate-400">
+                  No matching pages found.
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         {/* DESKTOP NAVIGATION */}
@@ -104,7 +253,6 @@ const Navbar = () => {
             Book Repair
           </Link>
 
-          {/* MY BOOKINGS - ALWAYS VISIBLE */}
           <button
             type="button"
             onClick={handleMyBookings}
@@ -114,7 +262,6 @@ const Navbar = () => {
             My Bookings
           </button>
 
-          {/* LOGIN / SIGNUP OR LOGOUT */}
           {!isLoggedIn ? (
             <>
               <Link
@@ -184,7 +331,6 @@ const Navbar = () => {
             Book Repair
           </Link>
 
-          {/* MY BOOKINGS - ALWAYS VISIBLE */}
           <button
             type="button"
             onClick={handleMyBookings}

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/auth/login";
+const BOOKINGS_API_URL = "http://localhost:5000/api/bookings";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,9 +27,12 @@ const Login = () => {
   const submit = async (e) => {
     e.preventDefault();
 
+    if (loading) return;
+
     try {
       setLoading(true);
 
+      // Step 1: Login request
       const response = await axios.post(API_URL, {
         email: user.email.trim(),
         password: user.password,
@@ -41,25 +45,68 @@ const Login = () => {
         return;
       }
 
-      // Save login details
+      // Step 2: Save login details
       localStorage.setItem("token", token);
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("user", JSON.stringify(loggedInUser));
 
-      // Role-based redirect
+      // Step 3: Admin redirect
       if (loggedInUser.role === "admin") {
         toast.success("Admin login successful!");
         navigate("/AdminDashboard");
-      } else if (loggedInUser.role === "user") {
-        toast.success("Login successful!");
-        navigate("/BookRepair");
-      } else {
-        localStorage.removeItem("token");
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("user");
-
-        toast.error("Invalid user role. Please contact support.");
+        return;
       }
+
+      // Step 4: Customer login
+      if (loggedInUser.role === "user") {
+        try {
+          // Fetch bookings belonging to the logged-in user
+          const bookingsResponse = await axios.get(
+            BOOKINGS_API_URL,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const bookings = bookingsResponse.data;
+
+          if (!Array.isArray(bookings)) {
+            toast.error("Invalid bookings response. Please try again.");
+            return;
+          }
+
+          // User has existing bookings
+          if (bookings.length > 0) {
+            toast.success("Login successful! Welcome back.");
+            navigate("/mybookings");
+          } else {
+            // User has no bookings
+            toast.success("Login successful!");
+            navigate("/BookRepair");
+          }
+        } catch (bookingError) {
+          console.error(
+            "Booking fetch error:",
+            bookingError.response?.data ||
+              bookingError.message
+          );
+
+          toast.error(
+            "Unable to check your bookings. Please try again."
+          );
+        }
+
+        return;
+      }
+
+      // Step 5: Invalid role
+      localStorage.removeItem("token");
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("user");
+
+      toast.error("Invalid user role. Please contact support.");
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -145,6 +192,7 @@ const Login = () => {
 
           <p className="mt-6 text-center text-gray-300">
             Don't have an account?
+
             <button
               type="button"
               onClick={() => navigate("/register")}
